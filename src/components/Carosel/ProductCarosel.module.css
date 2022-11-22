@@ -1,0 +1,9 @@
+.container{
+    width: 100vw;
+    height: 250px;
+}
+.carouselitem{
+    width: 500px; 
+    height: 250px; 
+    border-radius: 10px;
+}

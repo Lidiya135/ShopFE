@@ -1,0 +1,41 @@
+.container{
+    height: 80px;
+    background-color: white;
+    font-family: Metropolis;
+}
+.logo{
+    height: 32px;
+    width: 25px;
+}
+.textlogo{
+    color: #DB3022;
+    font-size: 26px;
+}
+.wrapperinput{
+    height: 40px;
+}
+.input_search{
+    height: 40px;
+}
+.filter{
+    border: 1px solid grey;
+    margin-bottom: 20px;
+}
+.btnfilter{
+    height: 30px;
+    width: 30px;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.cart{
+    font-size: 26px;
+    margin-bottom: 7px;
+    /* background-color: gray; */
+}
+.btnauth{
+    color: black;
+    width: 100px;
+    height: 32px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

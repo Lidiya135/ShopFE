@@ -1,33 +1,36 @@
-import {useState} from 'react'
-import About from './pages/About'
-import Home from './pages/Home/Home'
+import Login from './pages/login'
+import Register from './pages/Register'
+import ResetPass from './pages/ResetPass'
+import Home from './pages/Home'
 import Product from './pages/Product'
 import Profile from './pages/Profile'
-import {BrowserRouter,Route,Link,Routes,Navigate} from 'react-router-dom'
+import MyBag from './pages/MyBag'
+import Checkout from './pages/Checkout'
+import {BrowserRouter,Route,Routes,Navigate} from 'react-router-dom'
+import AuthChecker from './components/AuthChecker'
+import SellingProduct from './pages/SellingProduct'
+import DetailProduct from './pages/DetailProduct'
 
 function App() {
-  const [title,setTitle] = useState("Navbar")
   return (
     <div className="App">
-      <header className="App-header">
-        {title}
-      </header>
       <BrowserRouter>
-        <nav className='bg-info'>
-            <Link to="/">Home</Link>
-          
-            <Link to="/product">Product</Link>
-          
-            <Link to="/about">About</Link>
-          
-            <Link to="/profile">Profile</Link>
-        </nav>
         <Routes>
           <Route path='/' element={<Navigate to='/home' />} replace="true" />
           <Route path='/home' element={<Home />} />
-          <Route path='/product' element={<Product />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/product' element={
+            <AuthChecker>
+              <Product />
+            </AuthChecker>
+          } />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/ResetPass' element={<ResetPass />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/myBag' element={<MyBag />} />
+          <Route path='/Checkout' element={<Checkout />} />
+          <Route path='/sellingProduct' element={<SellingProduct />} />
+          <Route path='/DetailProduct' element={<DetailProduct />} />
         </Routes>
       </BrowserRouter>
     </div>

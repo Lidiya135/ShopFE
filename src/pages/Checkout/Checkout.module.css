@@ -1,0 +1,20 @@
+.container1{
+    /* background-color: aqua; */
+    display: flex;
+    width: 80vw;
+    justify-content: space-between;
+    font-family: Metropolis;
+}
+.Checkout {
+    font-weight: bold;
+  }
+.image {
+    margin-top: 25px;
+    margin-left: 10px;
+  }
+/* .box1{
+    height: 240px;
+}
+.box{
+    height: ;
+} */

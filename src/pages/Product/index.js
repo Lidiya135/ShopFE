@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import styles from'./Product.module.css'
-import Alert from "../../components/Alert";
+import Alert from "../../components/Alert"
+import Navbar from '../../components/Navbar'
 
 export default function Product() {
   const [data,setData] = useState([])
@@ -78,7 +79,12 @@ export default function Product() {
 
   let users = `http://localhost:4000/products?sortby=${sortBy}&sort=${sort}&search=${inputData.search}`
   const getData = ()=> {
-    axios.get(users)
+    let token = localStorage.getItem("token")
+    console.log("my token",token)
+    // axios.get(users)
+    axios.get(users,{headers:{
+      "Authorization" : `Bearer ${token}`
+    }})
     .then((res)=>{
         console.log("get data success")
         console.log(res.data.data)
@@ -92,9 +98,14 @@ export default function Product() {
         console.log("get data fail")
         console.log(err)
          setData([])
-        setMessageShow(true)
-      setMessage({title:"fail",text:"get data fail",type:"danger"})
-      messageTime()
+
+         err.response.data.message === 'server need token' &&  setMessageShow(true)
+         err.response.data.message === 'server need token' &&   setMessage({title:"belum login",text:"user must login",type:"danger"})
+         
+         err.response.data.message !== 'server need token' &&  setMessageShow(true)
+         err.response.data.message !== 'server need token' &&   setMessage({title:"fail",text:"get data fail",type:"danger"}) 
+
+        messageTime()
     })
   }
 
@@ -109,7 +120,7 @@ export default function Product() {
     console.log(formData)
     if(!selected){
       axios.
-      post('http://localhost:4000/products',formData,{
+      post(`http://localhost:4000/products`,formData,{
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -165,8 +176,7 @@ export default function Product() {
 
   return (
     <div>
-
-
+      <Navbar />
 
       {/* post data */}
       <form onSubmit={postForm} className="container mt-3 p-2 border border-3 ">
@@ -196,13 +206,13 @@ export default function Product() {
         Filter
       <div className="container d-flex flex-row">
         <div className="">
-          <div className={`btn ${sortBy=="name"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSortBy("name")}>name</div>
-          <div className={`btn ${sortBy=="stock"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSortBy("stock")}>stock</div>
-          <div className={`btn ${sortBy=="price"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSortBy("price")}>price</div>
+          <div className={`btn ${sortBy==="name"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSortBy("name")}>name</div>
+          <div className={`btn ${sortBy==="stock"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSortBy("stock")}>stock</div>
+          <div className={`btn ${sortBy==="price"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSortBy("price")}>price</div>
         </div>
         <div className="ms-1 border-start border-dark">
-          <div className={`btn ${sort=="asc"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSort("asc")}>asc</div>
-          <div className={`btn ${sort=="desc"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSort("desc")}>desc</div>
+          <div className={`btn ${sort==="asc"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSort("asc")}>asc</div>
+          <div className={`btn ${sort==="desc"? "btn-primary":"btn-secondary"} ms-1`} onClick={()=>setSort("desc")}>desc</div>
         </div>
         <div className="search ms-2">
         <input type="text" className="form-control" value={inputData.search} name="search" onChange={handleChange} placeholder="search"/>
@@ -224,7 +234,7 @@ export default function Product() {
         </thead>
         <tbody>
           {data.map((item,index)=>(
-            <tr key={index+1} className={`${item.id == selected ? "bg-info" : "bg-white"}`} onClick={item.id == selected ? ()=>setSelected(null) : ()=>
+            <tr key={index+1} className={`${item.id === selected ? "bg-info" : "bg-white"}`} onClick={item.id === selected ? ()=>setSelected(null) : ()=>
             (setSelected(item.id),editForm(item))
             }>
             <td>
@@ -240,7 +250,7 @@ export default function Product() {
               {item.price}
             </td>
             <td>
-              <img src={item.photo} className={styles.photo} />
+              <img src={item.photo} alt="" className={styles.photo} />
             </td>
           </tr>
           ))
