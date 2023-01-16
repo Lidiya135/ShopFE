@@ -7,7 +7,7 @@ import Profile from './pages/Profile';
 import MyBag from './pages/MyBag';
 import Checkout from './pages/Checkout';
 import {BrowserRouter,Route,Routes} from 'react-router-dom';
-// import AuthChecker from './components/AuthChecker';
+import AuthChecker from './components/AuthChecker';
 import SellingProduct from './pages/Profile/SellingProduct';
 import DetailProduct from './pages/DetailProduct';
 import RegisterCustomer from './pages/Register_Customer';
@@ -25,9 +25,9 @@ function App() {
           <Route path='/' element={<Landing />}/>
           <Route path='/home' element={<Home />} />
           <Route path='/product' element={
-            // <AuthChecker>
+            <AuthChecker>
               <Product />
-            // </AuthChecker>
+            </AuthChecker>
           } />
           <Route path='/register' element={<Register />} />
           <Route path='/register_customer' element={<RegisterCustomer />} />
@@ -35,8 +35,16 @@ function App() {
           <Route path='/login_customer' element={<LoginCustomer />} />
           <Route path='/ResetPass' element={<ResetPass />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/myBag' element={<MyBag />} />
-          <Route path='/Checkout' element={<Checkout />} />
+          <Route path='/myBag' element={
+          <AuthChecker>
+            <MyBag />
+          </AuthChecker>
+          } />
+          <Route path='/Checkout' element={
+          <AuthChecker>
+            <Checkout />
+          </AuthChecker>
+          } />
           <Route path='/sellingProduct' element={<SellingProduct />} />
           <Route path='/detailProduct' element={<DetailProduct />} />
           <Route path='/detailProduct/:id' element={<DetailProduct />} />

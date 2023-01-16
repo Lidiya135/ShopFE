@@ -70,7 +70,7 @@ export default function MyBag() {
     return (
         <div>
         <Nav1/>
-        <Navbar/>
+        {/* <Navbar/> */}
             <div className={styles.container}> 
                 <h2>My Bag</h2>
                 <div className="row">
@@ -86,7 +86,7 @@ export default function MyBag() {
                                     </div>
                                     <div className="col-lg-2 col-3">
                                         <Button onClick={deletecart} variant="danger">
-                                        <a  className="text-danger">Delete</a>
+                                        <a  className="text-white">Delete</a>
                                         </Button>
                                     </div>
                                 </div>
