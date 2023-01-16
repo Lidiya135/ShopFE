@@ -1,13 +1,73 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import Nav1 from "../../components/Nav1";
 import Star from '../../img/Star.png' 
-import Photo from '../../img/image1.jpg' 
+// import Photo from '../../img/image1.jpg' 
 import Button from 'react-bootstrap/Button';
-import { Link} from 'react-router-dom'; 
+import { Link, useNavigate} from 'react-router-dom'; 
 import Cards from "../../components/Card";
-import styles from "./DetailProduct.module.css"
+import styles from "./DetailProduct.module.css";
+import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const DetailProduct = () => {
+
+    const [data, setData] = useState([]);
+    const navigate = useNavigate();
+    const id_user =localStorage.getItem("id")
+    const token = localStorage.getItem("token");
+    const users= {
+    headers: {
+    Authorization: `Bearer ${token}`,
+    }};
+    const { id } = useParams();
+    console.log(id, "my id detail product")
+
+    useEffect(() => {
+        axios
+        .get(`http://localhost:4000/products/${id}`, users)
+        .then ((res) => {
+          console.log("get data succes");
+          console.log(res.data);
+          res.data &&  setData(res.data.data[0]);
+        })
+        .catch((err) => {
+          console.log("get data fail");
+          console.log(err);
+        });
+      }, [])
+
+        const qty=1;
+        const id_product= {id};
+        console.log(id ,"produkkkkk")
+        console.log(qty, "qty")
+        console.log(id_user, "id userr")
+
+      const addBag = async (e) => {
+        e.preventDefault();
+        const formData = new FormData()
+        formData.append('id_product',id_product)
+        formData.append('id_user',id_user)
+        formData.append('qty',qty)
+        console.log(formData)
+        axios
+        .post(`http://localhost:4000/cart`, formData, {
+            "content-type": "multipart/form-data",
+        } 
+    )
+    .then ((res) => {
+        console.log("add bag succes");
+        console.log(res);
+        Swal.fire("Success", "Add bag success", "success");
+        navigate('/myBag')
+    })
+    .catch((err) => {
+        console.log("Add bag failed");
+        console.log(err); window.location.reload(false);
+        Swal.fire("Warning", "Add bag failed", "error");
+    });
+    };
+
 
     return (
         <div>
@@ -25,11 +85,11 @@ const DetailProduct = () => {
             
                 <div className="container ">
                 <div className="row">
-                    <div className="col-lg-4">
-                        <img src={Photo} alt=""/>
+                    <div className="col-lg-4 ">
+                        <img src={data.photo}  className="col-lg-12 mt-5" alt=""/>
                     </div>
                     <div className="col-lg-6 offset-lg-1 ">
-                        <h6></h6>
+                        {/* <h6></h6> */}
                         <p>Zalora Shirt</p>
                         <div className='star d-flex'>
                             <img src={Star} alt=""/>
@@ -39,7 +99,7 @@ const DetailProduct = () => {
                             <img src={Star} alt=""/>
                         </div>
                         <p className='text-secondary'>Price</p>
-                        <h6>$ 20.0</h6>
+                        <h6>{data.price}</h6>
                         <p>Color</p>
                         <button className=" border-white bg-black rounded-circle mr-3" style={{width:'36px',height:'36px'}}></button>
                         <button className="border-white bg-danger rounded-circle mr-3"style={{width:'36px',height:'36px'}}></button>
@@ -59,7 +119,7 @@ const DetailProduct = () => {
                             <p>Jumlah</p>
                             <div class='d-flex'>
                                 <button className=" border-white rounded-circle " style={{width:'36px',height:'36px',background:'#D4D4D4'}}>-</button>
-                                <p>1</p>
+                                <p>{qty}</p>
                                 <button className=" border-white rounded-circle mr-3" style={{width:'36px',height:'36px',background:'#D4D4D4'}}>+</button>
                             </div>
                         </div>
@@ -71,7 +131,7 @@ const DetailProduct = () => {
                             <Button className ='border-secondary bg-white' variant="white" style={{ width:'160px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}}>Chat</Button>{' '}
                         </div>
                         <div className="col-lg-4 col-6">
-                            <Button className ='border-secondary bg-white' variant="white" style={{ width:'160px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}}>Add Bag</Button>{' '}
+                            <Button className ='border-secondary bg-white' variant="white" style={{ width:'160px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}} onClick={addBag}>Add Bag</Button>
                         </div>
                         <div className="col-lg-4">
                             <Button className ='bg-danger text-white' variant="white" style={{width:'343px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}}>Buy</Button>{' '}
@@ -86,8 +146,9 @@ const DetailProduct = () => {
                     <h5>Informasi Product</h5>
                     <h6>Condition</h6>
                     <h6 className='text-danger'>New</h6>
-                    <h6>Description</h6>
-                    <p style={{textAlign:'justify'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Donec non magna rutrum, pellentesque augue eu, sagittis velit. Phasellus quis laoreet dolor. Fusce nec pharetra quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent sed enim vel turpis blandit imperdiet ac ac felis. Etiam tincidunt tristique placerat. Pellentesque a consequat mauris, vel suscipit ipsum. Donec ac mauris vitae diam commodo vehicula. Donec quam elit, sollicitudin eu nisl at, ornare suscipit magna.Donec non magna rutrum, pellentesque augue eu, sagittis velit. Phasellus quis laoreet dolor. Fusce nec pharetra quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent sed enim vel turpis blandit imperdiet ac ac felis.In ultricies rutrum tempus. Mauris vel molestie orci.</p>
+                    <h6>{data.description}</h6>
+                    {/* <p style={{textAlign:'justify'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Donec non magna rutrum, pellentesque augue eu, sagittis velit. Phasellus quis laoreet dolor. Fusce nec pharetra quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent sed enim vel turpis blandit imperdiet ac ac felis. Etiam tincidunt tristique placerat. Pellentesque a consequat mauris, vel suscipit ipsum. Donec ac mauris vitae diam commodo vehicula. Donec quam elit, sollicitudin eu nisl at, ornare suscipit magna.Donec non magna rutrum, pellentesque augue eu, sagittis velit. Phasellus quis laoreet dolor. Fusce nec pharetra quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent sed enim vel turpis blandit imperdiet ac ac felis.In ultricies rutrum tempus. Mauris vel molestie orci.</p> */}
+                    <p style={{'textAlign':'justify'}}>{data.description}</p>
                 </div>
                 <h6>Product Review</h6>
                 <div>

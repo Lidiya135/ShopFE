@@ -98,8 +98,9 @@
     width: 123px;
     height: 48px;
     border: 0px;
-    color: #ffffff;
-    background-color: #db3022;
+    background-color: #ffffff;
+    color: #9b9b9b;
+    border: 1px solid #9b9b9b;
     border-radius: 0px 4px 4px 0px;
   }
   

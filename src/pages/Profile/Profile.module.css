@@ -1,5 +1,6 @@
 .container {
   font-family: Metropolis;
+  padding-top: 30px;
 }
 .line{
   width: 100%;
@@ -30,4 +31,7 @@
 }
 .line-center{
   border-left: 1px #D4D4D4 solid;
+}
+.infile{
+  visibility: hidden;
 }

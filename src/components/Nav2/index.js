@@ -1,41 +1,105 @@
-import React from 'react'
-import logo from '../../img/belanjavector.png'
-import styles from './Nav2.module.css'
-import profilePict from '../../img/christian.png'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Logo from '../Logo';
+import cart from '../../img/cart.png';
+import styles from '../Navv/navv.module.css';
+// import christian from '../../img/christian.png';
+import mail from '../../img/mail.png';
+import notif from '../../img/notif.png';
+// import user from '../../img/user.png';
+import {NavLink,  Link} from 'react-router-dom';
 
 const Nav2 = () => {
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate ();
+  const users= {
+    headers: {
+    Authorization: `Bearer ${token}`,
+  }};
+// console.log("ini tokennyaaaa=", token);
+
+// get Data 
+  useEffect(() => {
+    axios
+    .get("http://localhost:4000/users/profile", users)
+    .then ((res) => {
+      console.log("get data succes");
+      console.log(res.data);
+      res.data &&  setData(res.data.data[0]);
+    })
+    .catch((err) => {
+      console.log("get data fail");
+      console.log(err);
+    });
+  }, [])
+
+  //Logout
+  const handleLogout = async () =>{
+    await localStorage.clear();
+    Swal.fire("Logout", "Logout success", "success");
+    navigate("/login")
+  };
+
   return (
-    <div>
-        <div>
-        <div className="container-fluid shadow-lg">
-          <div className="container d-flex">
-            <div className="row w-100 py-4">
-            {/* <!-- Logo  --> */}
-              <div className="col-2 d-flex">
-                <img src={logo} className={styles.logo} alt='logo'/>
-                <Link className='text-decoration-none' to={'/home'}><p className={"fw-bold text-decoration-none mt-1 ms-2 "+ styles.textlogo}>Blanja</p></Link>
-              </div>
-              <div className={"col-6 position-relative d-flex align-items-center "+ styles.wrapperinput}>
-                <input type="text" className={"form-control rounded-pill "+ styles.input_search} />
-                <div className="wrapper position-absolute end-0 me-2">
-                  <Link to={'#search text-decoration-none'}>
-                    <i className="bi bi-search text-dark me-4" />
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div className="container">
+        <div className={styles.logo}>
+          <Logo className={styles.img_logo} />
+          <NavLink to="/home">Belanja</NavLink>
+        </div>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* <form className="d-flex">
+          <input className={styles.search} type="search" placeholder="Search " aria-label="Search"  />
+          <button className={styles.btn_sort} type="submit" >
+            <img src={filter} alt="filter" />
+          </button>
+        </form> */}
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto menu">
+              <div className={styles.menu_login}>
+                <li>
+                  <NavLink className="nav-link active" aria-current="page" to="/mybag">
+                    <img src={cart} alt="MyBag" />
+                  </NavLink>
+                </li>
+                <li>
+                  <Link className="nav-link active" aria-current="page" to="">
+                    <img src={notif} className="d-inline-block align-text-center" alt="" />
                   </Link>
-                </div>
-              </div>
-              <div className="col-4 d-flex align-items-center justify-content-end">
-                <a href="#cart" className={'text-decoration-none mx-4 '+ styles.icon}><i className="text-secondary bi bi-cart2"></i></a>
-                <a href="#notification" className={'text-decoration-none mx-4 '+ styles.icon}><i className="text-secondary bi bi-bell"></i></a>
-                <a href="#message" className={'text-decoration-none mx-4 '+ styles.icon}><i className="text-secondary bi bi-envelope"></i></a>
-                <Link to={'/profileCustomer'} className={"overflow-hidden ms-4 "+styles.wrapperimg}><img src={profilePict} className={styles.imgprofile} alt="" /></Link>
-              </div>
-            </div>
-          </div>
+                </li>
+                <li>
+                  <Link className="nav-link active" aria-current="page" to="">
+                    <img src={mail} className="d-inline-block align-text-center" alt="" />
+                  </Link>
+                </li>
+                <li>
+                  <div className={styles.dropdown}>
+                    <button className={styles.dropbtn}>
+                      <div className={styles.profile}>
+                        <img src={data.photo} className="d-inline-block align-text-center" alt="" />
+                      </div>
+                    </button>
+                    <div className={styles.dropdown_content}>
+                      <Link to="/profile">Profile {data.fullname}</Link>
+                      <Link onClick={handleLogout} to="#" >
+                        LogOut
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              </div> 
+             
+          </ul>
         </div>
       </div>
-    </div>
-  )
-}
+    </nav>
+  )}
 
 export default Nav2

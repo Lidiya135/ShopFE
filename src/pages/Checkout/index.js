@@ -1,11 +1,59 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Checkout.module.css";
-import Jas from "../../img/formalsuitblack.png";
-import Jaket from "../../img/jaketjeans.png";
+import axios from "axios";
+// import Jas from "../../img/formalsuitblack.png";
+// import Jaket from "../../img/jaketjeans.png";
 import styles from "./Checkout.module.css"
+import { useNavigate} from 'react-router-dom'; 
 // import Nav1 from "../../components/Nav1";
+import Swal from "sweetalert2";
 
 export default function Checkout() {
+
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  // const myBag = JSON.parse(localStorage.getItem('addBag'))
+  // const id_user =localStorage.getItem("id")
+  const token = localStorage.getItem("token");
+  const users= {
+  headers: {
+  Authorization: `Bearer ${token}`,
+  }};
+  const id=2;
+  console.log(id, "my id detail product")
+
+  useEffect(() => {
+      axios
+      .get(`http://localhost:4000/cart/${id}`)
+      .then ((res) => {
+        console.log("get data succes");
+        console.log(res.data);
+        res.data &&  setData(res.data.data[0]);
+      })
+      .catch((err) => {
+        console.log("get data fail");
+        console.log(err);
+      });
+    }, [])
+
+    const handleBuy = () => {
+      axios
+      .put(`http://localhost:4000/transactions-user`, 
+      {headers: {
+          'Content-Type': 'multipart/form-data'}
+      })
+      .then((res) => {
+         console.log(res, "post data success") 
+         Swal.fire("Success", "checkout success, silahkan lakukan pembayaran", "success");
+         navigate('/profile')
+        })
+          .catch((err) => {
+          console.log(err.message, 'post data fail')
+          Swal.fire("Warning", "Silahkan ulangi kembali", "error");
+       
+        })
+      }           
+
   return (
     <div>
     {/* <Nav1 /> */}
@@ -35,19 +83,20 @@ export default function Checkout() {
           <div className="container text-start" style={{ marginBottom: "10px" }} >
             <div className="row align-items-center">
               <div className="col">
-                <img src={Jas} alt="jas"style={{width:"100px"}} />
+                <img src={data.photo} alt="jas"style={{width:"100px"}} />
               </div>
               <div className="col">
-                <h6>Men's formal suit - Black</h6>
+                <h6>{data.name}</h6>
                 <h6 style={{ color: "#9b9b9b" }}>Zalora Cloth</h6>
               </div>
               <div className="col">
-                <h6 style={{ marginLeft: "50px" }}>$ 20.0</h6>
+                <h6 style={{ marginLeft: "50px" }}>{data.price}</h6>
               </div>
             </div>
           </div>
         </div>
-        <div className={"container-left shadow p-3 mb-5 bg-body rounded "}>
+
+        {/* <div className={"container-left shadow p-3 mb-5 bg-body rounded "}>
           <div className="container text-start" style={{ marginBottom: "10px" }}>
             <div className="row align-items-center">
               <div className="col" style={{ height: "100px" }}>
@@ -61,25 +110,25 @@ export default function Checkout() {
                 <h6 style={{ marginLeft: "50px" }}>$ 20.0</h6>
               </div>
             </div>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
       <div className= "container-left shadow p-3 mb-5 bg-body rounded" style={{width:"400px", height:"250px", marginTop:"160px"}}>
       <h5>Shopping summary</h5>
         <div className="d-flex justify-content-between pt-3">
           <span className= ""style= {{color: "grey", fontWeight: "500"}}>Order</span>
-          <span>$ 40.0</span>  
+          <span>{data.price}</span>  
         </div>
         <div className="d-flex justify-content-between pt-3">
           <span className="" style={{color: "grey", fontWeight: "500"}}>Delivery</span>
-          <span>$ 5.0</span>
+          <span>$ 0.0</span>
         </div>
         <div className="d-flex justify-content-between pt-3">
           <h6>Shopping summary</h6>
-          <h6 className= "" style={{color:"red"}}>$ 45.0</h6>
+          <h6 className= "" style={{color:"red"}}>{data.price}</h6>
         </div>
         <div className="d-grid gap-2 col-14 mx-auto pt-3">
-            <button type="button" className="btn btn-danger">Buy</button>
+            <button onclick={handleBuy}type="button" className="btn btn-danger">Buy</button>
         </div>
       </div>
     </div>

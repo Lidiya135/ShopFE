@@ -15,10 +15,9 @@ export default function ResetPass() {
                 <Logo title="Belanja" link="/home" />
               </div>
             </div>
-            <h2>Reset Password</h2>
+            <h4>Reset Password</h4>
             <form  className="container mt-5 col-12 text-center">
-                  <input type="email" className="form-control mb-2"  placeholder="email"/>
-                    <p className={styles.forget}>Forgot Password?</p>
+                  <input type="email" className="form-control mb-5"  placeholder="email"/>
                   <button type='submit' className='btn btn-danger col-9'>Primary</button>
             </form>
             <div className={styles.register}>

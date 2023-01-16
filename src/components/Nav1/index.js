@@ -1,47 +1,104 @@
-import React from 'react'
-import logo from '../../img/belanjavector.png'
-import filter from '../../img/sort.png'
-import cart from '../../img/cart.png'
-import styles from './Nav1.module.css'
-import home from '../../pages/Home'
-import {Link} from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Logo from '../Logo';
+import filter from '../../img/sort.png';
+import cart from '../../img/cart.png';
+import styles from '../Navv/navv.module.css';
+// import christian from '../../img/christian.png';
+import mail from '../../img/mail.png';
+import notif from '../../img/notif.png';
+// import user from '../../img/user.png';
+import {NavLink,  Link} from 'react-router-dom';
 
 const Nav1 = () => {
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate ();
+  const users= {
+    headers: {
+    Authorization: `Bearer ${token}`,
+  }};
+// console.log("ini tokennyaaaa=", token);
+
+// get Data 
+  useEffect(() => {
+    axios
+    .get("http://localhost:4000/users/profile", users)
+    .then ((res) => {
+      console.log("get data succes");
+      console.log(res.data);
+      res.data &&  setData(res.data.data[0]);
+    })
+    .catch((err) => {
+      console.log("get data fail");
+      console.log(err);
+    });
+  }, [])
+
+  //Logout
+  const handleLogout = async () =>{
+    await localStorage.clear();
+    Swal.fire("Logout", "Logout success", "success");
+    navigate("/login")
+  };
+
   return (
-    <div className={styles.container}>
-        <div className="container-fluid shadow-lg">
-          <div className="container d-flex">
-            <div className="row w-100 py-4">
-           
-              <div className="col-2 d-flex">
-                <img src={logo} className={styles.logo} alt='logo'/>
-                <a className={"fw-bold text-decoration-none mt-1 ms-2 "+ styles.textlogo} href={home}>Blanja</a>
-              </div>
-              <div className={"col-6 position-relative d-flex align-items-center "+ styles.wrapperinput}>
-                <input type="text" className={"form-control rounded-pill " + styles.input_search}  name="Search" placeholder="Search"/>
-                <button className="btn btn-none position-absolute end-0 me-4"><i className="bi bi-search" /></button>
-              </div>
-              <div className="col-4 d-flex align-items-center">
-                <div className={"btn btn-none "+ styles.btnfilter}><i class="bi bi-funnel"/>
-                  <img src={filter} className={styles.filter} alt='filter'/>
-                </div>
-                <div className="wrapperbtn ms-auto mb-2">
-                  <button className="btn btn-none"><i className={"bi bi-cart2 "+ styles.cart} />
-                    <img src={cart} className={styles.cart} alt='cart'/>
-                  </button>
-                  <button className={"btn btn-danger rounded-pill mx-4 "+ styles.btnauth}>
-                  <Link to="/login">Login</Link>
-                  </button>
-                  <button className={"btn btn-outline-secondary "+ styles.btnauth}>
-                  <Link to="/register">Register</Link>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div className="container">
+        <div className={styles.logo}>
+          <Logo className={styles.img_logo} />
+          <NavLink to="/home">Belanja</NavLink>
         </div>
-    </div>
-  )
-}
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <form className="d-flex">
+          <input className={styles.search} type="search" placeholder="Search " aria-label="Search"  />
+          <button className={styles.btn_sort} type="submit" >
+            <img src={filter} alt="filter" />
+          </button>
+        </form>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto menu">
+              <div className={styles.menu_login}>
+                <li>
+                  <NavLink className="nav-link active" aria-current="page" to="/mybag">
+                    <img src={cart} alt="MyBag" />
+                  </NavLink>
+                </li>
+                <li>
+                  <Link className="nav-link active" aria-current="page" to="">
+                    <img src={notif} className="d-inline-block align-text-center" alt="" />
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link active" aria-current="page" to="">
+                    <img src={mail} className="d-inline-block align-text-center" alt="" />
+                  </Link>
+                </li>
+                <li>
+                  <div className={styles.dropdown}>
+                    <button className={styles.dropbtn}>
+                      <div className={styles.profile}>
+                        <img src={data.photo} className="d-inline-block align-text-center" alt="" />
+                      </div>
+                    </button>
+                    <div className={styles.dropdown_content}>
+                      <Link to="/profile">Profile {data.fullname}</Link>
+                      <Link onClick={handleLogout} to="#" >
+                        LogOut
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              </div> 
+             
+          </ul>
+        </div>
+      </div>
+    </nav>
+  )}
 
 export default Nav1

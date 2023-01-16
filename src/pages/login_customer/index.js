@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { loginUser } from '../../redux/actions/login';
+import { loginUserc } from '../../redux/actions/login_cus';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import styles from './login.module.css';
+import styles from '../login/login.module.css';
 import Logo from '../../components/Logo';
 import "@fontsource/metropolis";
 
-export default function Login() {
+export default function LoginCustomer() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
 
@@ -20,7 +20,7 @@ export default function Login() {
     let data = {
       email,password
     }
-    dispatch(loginUser(data,navigate))
+    dispatch(loginUserc(data,navigate))
   }
 
   return (
@@ -34,18 +34,18 @@ export default function Login() {
             </div>
             <p>Please login with your account</p>
             <div className={styles.swictacount}>
-            <Link to="/login_customer" >
-              <button type="button" className={styles.btn_customer}>
+              <button type="button" style={{'backgroundColor': '#db3022'}} className={styles.btn_customer}>
                 Customer
               </button>
-            </Link>
-              <button type="button" style={{'backgroundColor': '#db3022'}} className={styles.btn_seller}>
+              <Link to="/login" >
+              <button type="button" className={styles.btn_seller}>
                 Seller
               </button>
+              </Link>
             </div>
             <form onSubmit={postData} className="container mt-5 col-12 text-center">
-                  <input type="email" className="form-control mb-2" value={email} name="email" onChange={(e)=>setEmail(e.target.value)} placeholder="email"/>
-                  <input type="password" className="form-control mb-2" value={password} name="password" onChange={(e)=>setPassword(e.target.value)} placeholder="password"/>
+                  <input type="email" className="form-control mb-2" value={email} name="email" onChange={(e)=>setEmail(e.target.value)}  placeholder="email"/>
+                  <input type="password" className="form-control mb-2"  value={password} name="password" onChange={(e)=>setPassword(e.target.value)}  placeholder="password"/>
                   <p className={styles.forget}>
                   <Link to="/ResetPass">Forgot Password?</Link>
                   </p>
@@ -53,7 +53,7 @@ export default function Login() {
             </form>
             <div className={styles.register}>
           <p>
-            Don't have a Belanja account? <Link to="/register">Register</Link>
+            Don't have a Belanja account? <Link to="/register_customer">Register</Link>
           </p>
         </div>
       </div>

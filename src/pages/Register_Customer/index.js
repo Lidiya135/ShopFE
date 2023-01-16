@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { registerUser } from '../../redux/actions/register';
+import { registerUserc } from '../../redux/actions/register_cus';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import styles from './Register.module.css';
+import styles from '../Register/Register.module.css';
 import Logo from '../../components/Logo';
 import "@fontsource/metropolis";
 
-export default function Register() {
+export default function RegisterCustomer() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [fullname,setFullname] = useState("")
@@ -22,7 +22,7 @@ export default function Register() {
     let data = {
       email,password,fullname
     }
-    dispatch(registerUser(data,navigate))
+    dispatch(registerUserc(data,navigate))
   }
 
   return (
@@ -36,26 +36,24 @@ export default function Register() {
             </div>
             <p>Please login with your account</p>
             <div className={styles.swictacount}>
-            <Link to="/register_customer" >
-              <button type="button" className={styles.btn_customer}>
+              <button type="button" style={{'backgroundColor': '#db3022'}} className={styles.btn_customer}>
                 Customer
               </button>
-              </Link>
-              <button type="button" style={{'backgroundColor': '#db3022'}} className={styles.btn_seller}>
+              <Link to="/register" >
+              <button type="button" className={styles.btn_seller}>
                 Seller
               </button>
+              </Link>
             </div>
             <form onSubmit={postData} className="container mt-5 col-12 text-center">
-                  <input type="email" className="form-control mb-3" value={email} name="email" onChange={(e)=>setEmail(e.target.value)} placeholder="email"/>
-                  <input type="password" className="form-control mb-3" value={password} name="password" onChange={(e)=>setPassword(e.target.value)} placeholder="password"/>
+                  <input type="email" className="form-control mb-3" value={email} name="email" onChange={(e)=>setEmail(e.target.value)}  placeholder="email"/>
+                  <input type="password" className="form-control mb-3" value={password} name="password"  onChange={(e)=>setPassword(e.target.value)} placeholder="password"/>
                   <input type="fullname" className="form-control mb-5" value={fullname} name="fullname" onChange={(e)=>setFullname(e.target.value)} placeholder="fullname"/>
-                  {/* <input type="number" className="form-control mb-5" value="" name="phone" placeholder="phone number"/>
-                  <input type="fullname" className="form-control mb-5" value="" name="fullname" placeholder="store name"/> */}
                   <button type='submit' className='btn btn-danger col-9'>Register</button>
             </form>
             <div className={styles.register}>
           <p>
-            Don't have a Belanja account? <Link to="/login">Login</Link>
+            Don't have a Belanja account? <Link to="/login_customer">Login</Link>
           </p>
         </div>
       </div>
