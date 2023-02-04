@@ -16,7 +16,6 @@ import Landing from './pages/Landing';
 import MyOrder from './pages/Profile/myOrder';
 import MyProduct from './pages/Profile/MyProduct';
 import MyHistory from './pages/MyHistory';
-import Test from './pages/My';
 
 function App() {
   return (
@@ -52,7 +51,6 @@ function App() {
           <Route path='/myOrder' element={<MyOrder />} />
           <Route path='/myProduct' element={<MyProduct />} />
           <Route path='/myHistory' element={<MyHistory />} />
-          <Route path='/test' element={<Test />} />
         </Routes>
       </BrowserRouter>
     </div>

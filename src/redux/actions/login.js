@@ -10,7 +10,7 @@ export const  loginUser = (data,navigate) => async (dispact) =>{
         localStorage.setItem("id",user.id)
         dispact({type:"USER_LOGIN_SUCCESS",payload: user})
         Swal.fire("Success", "Login toko success", "success")
-        navigate('/test')
+        navigate('/product')
         console.log("user login success")
     } catch(err){
         console.log("user login err")
