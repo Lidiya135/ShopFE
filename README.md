@@ -74,7 +74,7 @@ Before going to the installation stage there are some software that must be inst
 
 ### Installation
 
-If you want to run this project locally, I recommend you to configure the [back-end](https://github.com/Lidiya135/Chat-BE) first before configuring this repo front-end.
+If you want to run this project locally, I recommend you to configure the [back-end](https://github.com/Lidiya135/ShopBE) first before configuring this repo front-end.
 
 - Clone the repo
 
@@ -103,13 +103,9 @@ npm install
 | ------------- | ------------- |
 | ![Home](https://github.com/Lidiya135/ShopFE/blob/master/public/ss/home.jpg "Home before Page") | ![Home](https://github.com/Lidiya135/ShopFE/blob/master/public/ss/home_aftrlog.jpg "Home after Page")|
 
-| Detail Product Page | My Bag Page |
+| Detail Product Page | Checkout Page |
 | ------------- | ------------- |
 | ![Detail Product](https://github.com/Lidiya135/ShopFE/blob/master/public/ss/detail_product.jpg "Detail Product Page") | ![My Bag](https://github.com/Lidiya135/ShopFE/blob/master/public/ss/checkout.jpg "My Bag Page")|
-
-| Checkout Page | 
-| ------------- |
-| ![Checkout](https://github.com/Lidiya135/ShopFE/blob/master/public/ss/checkout.jpg "Checkout Page") |
 
 | Register Seller Page | Login Seller Page |
 | ------------- | ------------- |
@@ -141,6 +137,8 @@ Contributions are what make the open source community such an amazing place to b
 :rocket: [`Belanja Shop Frontend`](https://github.com/Lidiya135/ShopFE)
 
 :rocket: [`Belanja Shop Backend`](https://github.com/Lidiya135/Chat-BE)
+
+:rocket: [`Demo Blanja Shop`](https://food-recipe-be.vercel.app/)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
