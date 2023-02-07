@@ -21,7 +21,7 @@ function MyHistory() {
 //get portofolio
     const getData =() =>{
       axios
-        .get(`http://localhost:4000/products`, user)
+        .get(`https://zany-tan-rooster-hose.cyclic.app/products`, user)
         .then ((res) => {
           console.log("get data products succes");
           console.log(res.data, "data dari products");

@@ -5,10 +5,10 @@ import styles from'./Profile.module.css';
 import Nav1 from '../../components/Nav1';
 import DatePicker from "react-datepicker";
 // import christian from '../../img/christian.png'
-import Assets from './../../assets'
+// import Assets from './../../assets'
 import SideBar from '../../components/Sidebar'
 import Button from 'react-bootstrap/Button';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Profile() {
@@ -23,13 +23,13 @@ export default function Profile() {
     fullname: data.fullname,
     phone: data.phone,
     birth: data.birth,
-    // user_address: data.user_address,
+    user_address: data.user_address,
     gender: data.gender
   })
 
   useEffect(() => {
     axios
-    .get("http://localhost:4000/users/profile", users)
+    .get("https://zany-tan-rooster-hose.cyclic.app/users/profile", users)
     .then ((res) => {
       console.log("get data succes");
       console.log(res.data);
@@ -66,12 +66,12 @@ export default function Profile() {
         formData.append("email", updateData.email);
         formData.append("phone", updateData.phone);
         formData.append("gender", updateData.gender);
-        // formData.append("user_address", updateData.user_address);
+        formData.append("user_address", updateData.user_address);
         formData.append("birth", updateData.birth);
         formData.append("photo", photo);
         console.log(formData)
       axios
-      .put(`http://localhost:4000/users/edit-profile`, formData, users, {
+      .put(`https://zany-tan-rooster-hose.cyclic.app/users/${data.id}`, formData, users, {
         "content-type": "multipart/form-data",
        })
        .then ((res) => {

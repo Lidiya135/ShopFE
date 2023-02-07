@@ -10,8 +10,6 @@ import CategoryModal from '../../../components/CategoryModal';
 import AddProductModal from '../../../components/AddProductModal';
 
 function   MyOrder() {
-
-
   return (
     <div className={styles.myOrderPg}>
       <Nav1 />

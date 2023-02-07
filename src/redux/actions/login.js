@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 export const  loginUser = (data,navigate) => async (dispact) =>{
     try{
         dispact({type:"USER_LOGIN_PENDING"})
-        const result = await axios.post("http://localhost:3009/users/login",data)
+        const result = await axios.post("https://zany-tan-rooster-hose.cyclic.app/users/login",data)
         const user = result.data.data
         localStorage.setItem("token",user.token)
         localStorage.setItem("id",user.id)

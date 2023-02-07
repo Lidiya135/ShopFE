@@ -12,7 +12,7 @@ export default function CategoryModal() {
     
     const getData = () => {
       axios
-      .get(`http://localhost:4000/category`)
+      .get(`https://zany-tan-rooster-hose.cyclic.app/category`)
       .then ((res) => {
         console.log("get category succes");
         console.log(res.data, "DATA DARI GET category");
@@ -40,7 +40,7 @@ export default function CategoryModal() {
 
     const handleEdit = (e, id) => {
       axios
-      .get(`http://localhost:4000/category/${id}` )
+      .get(`https://zany-tan-rooster-hose.cyclic.app/category/${id}` )
       .then ((res) => {
         console.log("get category succes");
         console.log(res.data, "DATA DARI GET category by idddddd");
@@ -58,7 +58,7 @@ export default function CategoryModal() {
       formData.append("name", updateData.name);
       console.log(formData)
      axios
-      .put(`http://localhost:4000/category/${id}`, formData, {
+      .put(`https://zany-tan-rooster-hose.cyclic.app/category/${id}`, formData, {
       "content-type": "multipart/form-data",
      })
     .then ((res) => {
@@ -74,7 +74,7 @@ export default function CategoryModal() {
   };
 
   const deleteData = (e, id) => {
-    axios.delete(`http://localhost:4000/category/${id}`,)
+    axios.delete(`https://zany-tan-rooster-hose.cyclic.app/category/${id}`,)
     .then((res)=>{
         console.log("delete category success")
         console.log(res)

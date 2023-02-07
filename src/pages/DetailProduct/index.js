@@ -14,7 +14,7 @@ const DetailProduct = () => {
 
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const id_user =localStorage.getItem("id")
+    const users_id =localStorage.getItem("id")
     const token = localStorage.getItem("token");
     const users= {
     headers: {
@@ -25,7 +25,7 @@ const DetailProduct = () => {
 
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/products/${id}`, users)
+        .get(`https://zany-tan-rooster-hose.cyclic.app/products/${id}`, users)
         .then ((res) => {
           console.log("get data succes");
           console.log(res.data);
@@ -37,21 +37,20 @@ const DetailProduct = () => {
         });
       }, [])
 
-        const qty=1;
-        const id_product= {id};
-        console.log(id ,"produkkkkk")
-        console.log(qty, "qty")
-        console.log(id_user, "id userr")
-
-      const addBag = async (e) => {
+      let products_id = id;
+      let amount = 1;
+      let total = data.price;
+      const addTransaction = async (e) => {
         e.preventDefault();
-        const formData = new FormData()
-        formData.append('id_product',id_product)
-        formData.append('id_user',id_user)
-        formData.append('qty',qty)
+        const formData = new FormData();
+        formData.append('users_id', users_id);
+        formData.append('products_id',products_id);
+        formData.append('amount',amount);
+        formData.append('total',total);
+        formData.append('seller_id, seller_id')
         console.log(formData)
         axios
-        .post(`http://localhost:4000/cart`, formData, {
+        .post(`https://zany-tan-rooster-hose.cyclic.app/transactions`, formData, {
             "content-type": "multipart/form-data",
         } 
     )
@@ -59,7 +58,7 @@ const DetailProduct = () => {
         console.log("add bag succes");
         console.log(res);
         Swal.fire("Success", "Add bag success", "success");
-        navigate('/myBag')
+        navigate('/checkout')
     })
     .catch((err) => {
         console.log("Add bag failed");
@@ -75,8 +74,8 @@ const DetailProduct = () => {
             <div className={styles.container}>
                 <div className="row">
                     <div className="col-12 d-flex">
-                        <p><Link to ='/' style={{color:"grey"}}> Home > </Link> </p>
-                        <p style={{color:"grey"}}>Category > </p>
+                        <p><Link to ='/' style={{color:"grey"}}> Home -- </Link> </p>
+                        <p style={{color:"grey"}}>Category-- </p>
                         <p style={{color:"grey"}}> T-Shirt </p>
                     </div>
                         <p style={{fontWeight:"750px", fontSize:"36px", paddingTop:"20px"}}>Detail product</p>
@@ -119,7 +118,7 @@ const DetailProduct = () => {
                             <p>Jumlah</p>
                             <div class='d-flex'>
                                 <button className=" border-white rounded-circle " style={{width:'36px',height:'36px',background:'#D4D4D4'}}>-</button>
-                                <p>{qty}</p>
+                                <p>{amount}</p>
                                 <button className=" border-white rounded-circle mr-3" style={{width:'36px',height:'36px',background:'#D4D4D4'}}>+</button>
                             </div>
                         </div>
@@ -131,7 +130,7 @@ const DetailProduct = () => {
                             <Button className ='border-secondary bg-white' variant="white" style={{ width:'160px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}}>Chat</Button>{' '}
                         </div>
                         <div className="col-lg-4 col-6">
-                            <Button className ='border-secondary bg-white' variant="white" style={{ width:'160px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}} onClick={addBag}>Add Bag</Button>
+                            <Button className ='border-secondary bg-white' variant="white" style={{ width:'160px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}} onClick={addTransaction}>Add Bag</Button>
                         </div>
                         <div className="col-lg-4">
                             <Button className ='bg-danger text-white' variant="white" style={{width:'343px',height:'48px',borderRadius:'24px',borderColor:'#9B9B9B'}}>Buy</Button>{' '}

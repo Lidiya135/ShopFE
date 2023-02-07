@@ -30,7 +30,7 @@ export default function Profile() {
 
   useEffect(() => {
     axios
-    .get("http://localhost:4000/users/profile", users)
+    .get("https://zany-tan-rooster-hose.cyclic.app/users/profile", users)
     .then ((res) => {
       console.log("get data succes");
       console.log(res.data);
@@ -71,7 +71,7 @@ export default function Profile() {
         formData.append("photo", photo);
         console.log(formData)
       axios
-      .put(`http://localhost:4000/users/${id}`, formData, users, {
+      .put(`https://zany-tan-rooster-hose.cyclic.app/users/${id}`, formData, users, {
         "content-type": "multipart/form-data",
        })
        .then ((res) => {

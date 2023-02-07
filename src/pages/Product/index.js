@@ -17,7 +17,7 @@ export default function Product() {
     name: "",
     stock: "",
     price: "",
-    category_id: "1",
+    category_id: "",
     search: ""
   })
   const [sortBy,setSortBy] = useState("name")
@@ -27,7 +27,7 @@ export default function Product() {
   const [temp,setTemp] = useState(null)
 
   const deleteData = () => {
-    axios.delete(`http://localhost:4000/products/${selected}`)
+    axios.delete(`https://zany-tan-rooster-hose.cyclic.app/products/${selected}`)
     .then((res)=>{
         console.log("delete data success")
         console.log(res)
@@ -77,7 +77,7 @@ export default function Product() {
     getData()
   },[])
 
-  let users = `http://localhost:4000/products?sortby=${sortBy}&sort=${sort}&search=${inputData.search}`
+  let users = `https://zany-tan-rooster-hose.cyclic.app/products?sortby=${sortBy}&sort=${sort}&search=${inputData.search}`
   const getData = ()=> {
     let token = localStorage.getItem("token")
     console.log("my token",token)
@@ -120,7 +120,7 @@ export default function Product() {
     console.log(formData)
     if(!selected){
       axios.
-      post(`http://localhost:4000/products`,formData,{
+      post(`https://zany-tan-rooster-hose.cyclic.app/products`,formData,{
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -140,7 +140,7 @@ export default function Product() {
     })
   } else {
     axios.
-    put(`http://localhost:4000/products/${selected}`,formData,{
+    put(`https://zany-tan-rooster-hose.cyclic.app/products/${selected}`,formData,{
       headers: {
         "Content-Type": "multipart/form-data",
       },

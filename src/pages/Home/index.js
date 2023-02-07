@@ -8,9 +8,6 @@ import "@fontsource/metropolis"
 import Nav1 from "../../components/Nav1";
 
 export default function Home () {
-
-   
-
     return (
         <div className={styles.Container}>
             <Nav1 />

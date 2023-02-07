@@ -20,7 +20,7 @@ const CategoryCarosel = () => {
         // get Data catgory
     useEffect(() => {
         axios
-        .get("http://localhost:4000/products", users)
+        .get("https://zany-tan-rooster-hose.cyclic.app/products", users)
         .then ((res) => {
         console.log("get data succes");
         console.log(res.data);
@@ -31,6 +31,7 @@ const CategoryCarosel = () => {
         console.log(err);
         });
     }, [])
+    
         return (
             <section>
               <div className={"container overflow-hidden mt-5 "+ styles.container}>

@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
-import {Link} from 'react-router-dom'
-import {useSelector} from 'react-redux'
-import DetailProduct from '../../pages/DetailProduct'
+import React, { useEffect } from 'react';
+import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 const Navbar = () => {  
   const logout = () => {

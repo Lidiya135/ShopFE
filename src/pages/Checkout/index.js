@@ -4,14 +4,11 @@ import axios from "axios";
 // import Jas from "../../img/formalsuitblack.png";
 // import Jaket from "../../img/jaketjeans.png";
 import styles from "./Checkout.module.css"
-import { useNavigate} from 'react-router-dom'; 
 // import Nav1 from "../../components/Nav1";
-import Swal from "sweetalert2";
 
 export default function Checkout() {
 
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
   // const myBag = JSON.parse(localStorage.getItem('addBag'))
   // const id_user =localStorage.getItem("id")
   const token = localStorage.getItem("token");
@@ -19,12 +16,10 @@ export default function Checkout() {
   headers: {
   Authorization: `Bearer ${token}`,
   }};
-  const id=2;
-  console.log(id, "my id detail product")
 
   useEffect(() => {
       axios
-      .get(`http://localhost:4000/cart/${id}`)
+      .get(`https://zany-tan-rooster-hose.cyclic.app/cart/transactions`, users)
       .then ((res) => {
         console.log("get data succes");
         console.log(res.data);
@@ -34,25 +29,7 @@ export default function Checkout() {
         console.log("get data fail");
         console.log(err);
       });
-    }, [])
-
-    const handleBuy = () => {
-      axios
-      .put(`http://localhost:4000/transactions-user`, 
-      {headers: {
-          'Content-Type': 'multipart/form-data'}
-      })
-      .then((res) => {
-         console.log(res, "post data success") 
-         Swal.fire("Success", "checkout success, silahkan lakukan pembayaran", "success");
-         navigate('/profile')
-        })
-          .catch((err) => {
-          console.log(err.message, 'post data fail')
-          Swal.fire("Warning", "Silahkan ulangi kembali", "error");
-       
-        })
-      }           
+    }, [])           
 
   return (
     <div>
@@ -128,7 +105,7 @@ export default function Checkout() {
           <h6 className= "" style={{color:"red"}}>{data.price}</h6>
         </div>
         <div className="d-grid gap-2 col-14 mx-auto pt-3">
-            <button onclick={handleBuy}type="button" className="btn btn-danger">Buy</button>
+            <button type="button" className="btn btn-danger">Buy</button>
         </div>
       </div>
     </div>

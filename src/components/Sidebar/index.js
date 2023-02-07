@@ -20,7 +20,7 @@ export default function SideBar() {
 
   useEffect(() => {
     axios
-    .get("http://localhost:4000/users/profile", users)
+    .get("https://zany-tan-rooster-hose.cyclic.app/users/profile", users)
     .then ((res) => {
       console.log("get data succes");
       console.log(res.data);

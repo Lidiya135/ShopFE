@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 export const  registerUser = (data,navigate) => async (dispact) =>{
     try{
         dispact({type:"REGISTER_LOGIN_PENDING"})
-        const result = await axios.post("http://localhost:4000/users/register/toko",data)
+        const result = await axios.post("https://zany-tan-rooster-hose.cyclic.app/users/register/toko",data)
         const user = result.data.data
         dispact({type:"USER_REGISTER_SUCCESS",payload: user})
         Swal.fire("Success", "Register toko success", "success");

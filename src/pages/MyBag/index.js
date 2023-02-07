@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import Nav1 from '../../components/Nav1'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 // import jas from '../../img/formalsuitblack.png'
 import styles from "./MyBag.module.css"
-import Navbar from "../../components/Navbar";
+// import Navbar from "../../components/Navbar";
 
 export default function MyBag() {
     
-    const navigate = useNavigate();
     // const token = localStorage.getItem('token');
     // const id_user = localStorage.getItem('id');
     const [data, setData] = useState([]);
-    let status= 0;
 
     const myBag = () => {
-        axios.get(`http://localhost:4000/cart`)
+        axios.get(`https://zany-tan-rooster-hose.cyclic.app/transactions`)
             .then((res) => {
                 console.log("get data success")
                 console.log(res.data.data)
@@ -32,41 +28,7 @@ export default function MyBag() {
     useEffect(() => {
         myBag()
     }, [])
-    //delete product
-    const deletecart = () => {
-        axios.delete(`http://localhost:4000/cart`, )
-            .then((res) => {
-            console.log("delete data success")
-            Swal.fire("Success", "DELETE bag success", "success");
-            myBag()
-            })
-            .catch((err) => {
-            console.log("delete data fail")
-            Swal.fire("Warning", "delete bag failed", "error");
-            console.log(err)
-            })
-    }
-
-    const handleBuy = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('status', status )
-        axios
-        .post(`http://localhost:4000/transactions-status`, formData,
-        {headers: {
-         'Content-Type': 'multipart/form-data'}
-        })
-        .then((res) => {
-           console.log(res, "post data success")
-           Swal.fire("Success", "order success, silahkan checkout dan lakukan pembayaran", "success");
-            localStorage.setItem('myBag',JSON.stringify(myBag))
-            navigate('/checkout')
-        })
-        .catch((err) => {
-            console.log(err.message, 'post data fail')
-            Swal.fire("Warning", "Silahkan ulangi kembali", "error");
-          })
-        }                            
+                
     return (
         <div>
         <Nav1/>
@@ -85,7 +47,7 @@ export default function MyBag() {
                                         <h6>Select all items (2 items selected)</h6>
                                     </div>
                                     <div className="col-lg-2 col-3">
-                                        <Button onClick={deletecart} variant="danger">
+                                        <Button variant="danger">
                                         <a  className="text-white">Delete</a>
                                         </Button>
                                     </div>
@@ -158,7 +120,7 @@ export default function MyBag() {
                                     </div>
                                 </div>
                                 <div>
-                                   <Button onClick={handleBuy} className ='bg-danger' variant="white" style={{ width:'322px',height:'36px',borderRadius:'25px'}}>Buy</Button>{' '} 
+                                   <Button className ='bg-danger' variant="white" style={{ width:'322px',height:'36px',borderRadius:'25px'}}>Buy</Button>{' '} 
                                 </div>
                             </Card.Body>
                     </Card>
